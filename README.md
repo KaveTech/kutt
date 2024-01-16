@@ -1,3 +1,19 @@
+# How to run locally (Kave Version):
+1. `copy env.sample .env`, values are ready for local development.
+2. `npm install --force`, to install all needed dependencies. Use NPM. Do not use yarn.
+3. `docker compose up` to spin up the database and redis services.
+4. `npm run dev` to start the server.
+
+
+# How to deploy to production (Kave Version):
+
+
+
+
+
+
+# Original Readme:
+
 <p align="center"><a href="https://kutt.it" title="kutt.it"><img src="https://raw.githubusercontent.com/thedevs-network/kutt/9d1c873897c3f5b9a1bd0c74dc5d23f2ed01f2ec/static/images/logo-github.png" alt="Kutt.it"></a></p>
 
 # Kutt.it
@@ -15,15 +31,25 @@ _Contributions and bug reports are welcome._
 
 ## Table of Contents
 
-- [Key Features](#key-features)
-- [Stack](#stack)
-- [Setup](#setup)
-- [Browser Extensions](#browser-extensions)
-- [API](#api)
-- [Integrations](#integrations)
-- [3rd Party Packages](#3rd-party-packages)
-- [Donate](#donate)
-- [Contributing](#contributing)
+- [How to run locally (Kave Version):](#how-to-run-locally-kave-version)
+- [How to deploy to production (Kave Version):](#how-to-deploy-to-production-kave-version)
+- [Original Readme:](#original-readme)
+- [Kutt.it](#kuttit)
+  - [Table of Contents](#table-of-contents)
+  - [Key Features](#key-features)
+  - [Stack](#stack)
+  - [Setup](#setup)
+    - [Manual](#manual)
+    - [Docker](#docker)
+    - [Configuration](#configuration)
+  - [Browser Extensions](#browser-extensions)
+  - [API](#api)
+  - [Integrations](#integrations)
+    - [ShareX](#sharex)
+    - [Alfred Workflow](#alfred-workflow)
+  - [3rd Party packages](#3rd-party-packages)
+  - [Donate](#donate)
+  - [Contributing](#contributing)
 
 ## Key Features
 
