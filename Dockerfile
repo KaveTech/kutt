@@ -2,7 +2,7 @@ FROM node:12-alpine
 
 RUN apk add --update bash
 
-# Setting working directory. 
+# Setting working directory.
 WORKDIR /usr/src/app
 
 # Installing dependencies
