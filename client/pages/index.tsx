@@ -28,8 +28,8 @@ const Homepage = () => {
       <Shortener />
       {!isAuthenticated && <NeedToLogin />}
       {isAuthenticated && <LinksTable />}
-      <Features />
-      <Extensions />
+      {/* <Features />
+      <Extensions /> */}
       <Footer />
     </AppWrapper>
   );
