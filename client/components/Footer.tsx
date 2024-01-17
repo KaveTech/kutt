@@ -18,7 +18,15 @@ const Footer: FC = () => {
   }, []);
 
   return (
-    ""
+    <ColCenter
+      as="footer"
+      width={1}
+      backgroundColor="white"
+      p={isAuthenticated ? 2 : 24}
+    >
+    </ColCenter>
+
+    // Original footer content:
     // <ColCenter
     //   as="footer"
     //   width={1}
