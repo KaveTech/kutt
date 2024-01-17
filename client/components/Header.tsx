@@ -108,7 +108,7 @@ const Header: FC = () => {
             isNextLink
           >
             <Image
-              src="/images/logo.svg"
+              src="/static/images/logo.svg"
               alt="kutt logo"
               width={18}
               height={24}
