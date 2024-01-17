@@ -1,5 +1,6 @@
 import env from "./env";
 
+import path from "path";
 import asyncHandler from "express-async-handler";
 import cookieParser from "cookie-parser";
 import passport from "passport";
@@ -35,7 +36,7 @@ app.prepare().then(async () => {
   server.use(express.json());
   server.use(express.urlencoded({ extended: true }));
   server.use(passport.initialize());
-  server.use(express.static("static"));
+  server.use(express.static(path.join(__dirname, "static")));
   server.use(helpers.ip);
 
   server.use(asyncHandler(links.redirectCustomDomain));
