@@ -1,5 +1,6 @@
 {
     "version": 2,
+    "buildCommand": "rimraf production-server && tsc --project tsconfig.json && copyfiles -f \"server/mail/*.html\" production-server/mail && next build client/",
     "builds": [
         {
             "src": "production-server/server.js",
