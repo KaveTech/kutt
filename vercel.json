@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "production-server/server.js",
+            "use": "@vercel/node",
+            "config": { "includeFiles": ["production-server/**"] }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "production-server/server.js"
+        }
+    ]
+}
