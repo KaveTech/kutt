@@ -1,0 +1,119 @@
+nameOverride: ""
+
+fullnameOverride: ""
+
+image:
+  repository: ghcr.io/kavetech/kutt
+  pullPolicy: Always
+  tag: "0.1"
+
+imagePullSecrets:
+  - name: github-token
+
+serviceAccount:
+  create: false
+
+ingress:
+  enabled: true
+  annotations:
+    networking.gke.io/v1beta1.FrontendConfig: http-to-https
+  hosts:
+    - host: kave.to
+      paths:
+        - path: /*
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: tls
+
+kutt:
+  admin:
+    # -- Comma seperated list of email addresses that can access admin actions on settings page
+    emails: "it@kavehome.com"
+  config:
+    # -- Max number of visits for each link to have detailed stats
+    defaultMaxStatsPerLink: "5000"
+    # -- Disable anonymous link creation
+    disallowAnonymousLinks: true
+    # -- Disable registration
+    disallowRegistration: false
+    # -- Generated link length
+    linkLength: 6
+    # -- The name of the site where Kutt is hosted
+    siteName: "Kave Home URL shortener"
+    # -- The daily limit for each user
+    userLimitPerDay: 50
+  domain:
+    # -- Use HTTPS for links with custom domain
+    customDomainUseHttps: false
+    # -- The domain that this website is on
+    defaultDomain: "kave.to"
+    # -- If you use an ingress to expose Kutt you can simply set this to true to use the first hostname defined in the ingress.
+    useFirstIngressHost: true
+  google:
+    # -- Use existing secret for Google configuration. The secret has to contain the key `GOOGLE_SAFE_BROWSING_KEY`. When it's set the `kutt.google.safeBrowsingKey` is ignored.
+    existingSecret: "google-safe-browsing-key"
+    # -- Google Cloud API to prevent from users from submitting malware URLs. Get it from https://developers.google.com/safe-browsing/v4/get-started.
+    safeBrowsingKey: ""
+  jwt:
+    # -- Use existing secret for JWT secret key. The secret has to contain the key `JWT_SECRET`. When it's set the kutt.jwt.key is ignored.
+    existingSecret: ""
+    # -- make sure to replace with your own secret key
+    key: "jwt-key"
+  mail:
+    # -- Support email to show on the app
+    contactEmail: "it@kavehome.com"
+    # -- Use existing secret for password details. The secret has to contain the key `MAIL_PASSWORD`. When it's set the `kutt.mail.password` is ignored.
+    existingSecret: "mail-password"
+    # -- The email address Kutt will send emails from.
+    from: "kutt-url-shortener@kavehome.com"
+    # -- The host of the external SMTP server that Kutt should use to send emails.
+    host: "smtp.mandrillapp.com"
+    # -- The password to authenticate to the smtp host when sending emails.
+    password: ""
+    # -- The port used to connect to the smtp host.
+    port: 587
+    # -- The email address that will receive submitted reports.
+    reportEmail: ""
+    # -- If true the connection will use TLS when connecting to server. If false (the default) then TLS is used if server supports the STARTTLS extension. In most cases set this value to true if you are connecting to port 465. For port 587 or 25 keep it false
+    secure: true
+    # -- The username to authenticate to the smtp host when sending emails.
+    username: "it@kavehome.com"
+  recaptcha:
+    # -- Use existing secret for ReCaptacha secrets. The secret has to contain the keys `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY`. When it's set the kutt.recaptcha.siteKey and kutt.recaptcha.secretKey is ignored.
+    existingSecret: ""
+    # -- Invisible reCaptcha site key. Create one in https://www.google.com/recaptcha/intro/
+    siteKey: ""
+    # -- Invisible reCaptcha secret key. Create one in https://www.google.com/recaptcha/intro/
+    secretKey: ""
+
+postgresql:
+  # -- enable PostgreSQL™ subchart from Bitnami
+  enabled: false
+
+externalPostgresql:
+  auth:
+    # -- Name of the database to use
+    database: url_shortener_db	
+    # -- Name of existing secret to use for PostgreSQL credentials
+    existingSecret: "database-password"
+    # -- Password to use
+    password: ""
+    # -- Name of the user to use
+    username: url_shortener_user
+    # -- Key in the secret containing the password
+    userPasswordKey: "DATABASE_PASSWORD"
+  # -- Hostname of the PostgreSQL database
+  hostname: "kave-tech-services:europe-west2:kutt-url-shortener"
+  # -- Port used to connect to PostgreSQL database
+  port: 5432
+
+redis:
+  # -- enable Redis™ subchart from Bitnami
+  enabled: true
+  # -- Redis® architecture. Allowed values: standalone or replication
+  architecture: standalone
+  auth:
+    # -- Enable password authentication
+    enabled: true
+    # -- Redis™ password
+    password: kutt
