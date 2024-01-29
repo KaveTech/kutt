@@ -7,8 +7,11 @@ import env from "../env";
 import { logger } from "../config/winston";
 
 export const ip: Handler = (req, res, next) => {
-  req.realIP =
-    (req.headers["x-real-ip"] as string) || req.connection.remoteAddress || "";
+  const xForwardedForIp = 'x-forwarded-for' in req.headers
+    ? (req.headers['x-forwarded-for'] as string)?.split(', ')[0]
+    : undefined;
+
+  req.realIP = xForwardedForIp || req.socket.remoteAddress || "";
   return next();
 };
 
