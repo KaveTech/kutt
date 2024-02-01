@@ -1,0 +1,6 @@
+dependencies:
+- name: kutt
+  repository: https://christianknell.github.io/helm-charts
+  version: 3.3.0
+digest: sha256:45e803a03577dabbcba3ab017ca00911c2b9bf5f7fe82b0616a944f0b8a7dc47
+generated: "2024-01-31T11:52:52.794702682+01:00"
