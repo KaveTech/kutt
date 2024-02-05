@@ -67,7 +67,7 @@ First wait until the Google managed cert has been created and ACTIVE. When the c
 
 3. The github action will build and push the image and run a helm upgrade with the new image.
 
-NOTE: The upgrade only change the image tag, if you want to apply other changes on custom-values run helm upgrade manually.
+NOTE: The upgrade only changes the image tag, if you want to apply other changes on custom-values run helm upgrade manually.
 
 To run manually: Go to github and ensure that the image number it's equals on github and on custom-values.yaml and change on custom-values the last tag manually.
 
