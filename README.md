@@ -59,6 +59,19 @@ helm uninstall url-shortener --namespace url-shortener
 ### See the results
 First wait until the Google managed cert has been created and ACTIVE. When the cert is ACTIVE, you can go to https://kave.to
 
+## How to deploy new code changes
+
+1. Push the branch and make a PR.
+
+2. Run the github action "Deploy new image version" using your branch or if you merged the PR first, using develop branch.
+
+3. The github action will build and push the image and run a helm upgrade with the new image.
+
+NOTE: The upgrade only change the image tag, if you want to apply other changes on custom-values run helm upgrade manually.
+
+To run manually: Go to github and ensure that the image number it's equals on github and on custom-values.yaml and change on custom-values the last tag manually.
+
+
 # Original Readme:
 
 <p align="center"><a href="https://kutt.it" title="kutt.it"><img src="https://raw.githubusercontent.com/thedevs-network/kutt/9d1c873897c3f5b9a1bd0c74dc5d23f2ed01f2ec/static/images/logo-github.png" alt="Kutt.it"></a></p>

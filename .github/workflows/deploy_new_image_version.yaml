@@ -1,0 +1,77 @@
+name: Deploy new image version
+
+on: 
+  workflow_dispatch:
+
+env:
+  TAG: ${{ github.run_number}}
+  GKE_CLUSTER: services-prod-1
+  GKE_ZONE: europe-west2-b
+    
+jobs:
+  build-image-and-push:
+    name: Build image and push to ghcr.io
+
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3.3.0
+
+      - name: Import Secrets
+        id: import-secrets
+        uses: hashicorp/vault-action@v2
+        with:
+          url: https://vault.kavehome.com/
+          method: github
+          githubToken: ${{ secrets.ITKAVEHOME_VAULT_TOKEN_READ }}
+          caCertificate: ${{ secrets.ITKAVEHOME_VAULT_KEYCHAIN_CERTIFICATE }}
+          secrets: |
+            k8s/kv/kave-tech-services/data/generic-utils GOOGLE_APPLICATION_CREDENTIALS_DEPLOY;
+
+      - name: Set lower case repository name 
+        id: prepare-outputs
+
+        run: | 
+          echo "IMAGE_REPOSITORY=$(printf ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          echo "TAG=$(printf ${{ github.ref }} | tr -d 'refs/tags/')" >> $GITHUB_ENV
+
+      - name: Log in to GitHub Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Build&Push App container image
+        uses: docker/build-push-action@v4
+        with:
+          file: Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ env.IMAGE_REPOSITORY }}-:${{ env.TAG }}
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      # Setup gcloud CLI
+      - id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ env.GOOGLE_APPLICATION_CREDENTIALS_DEPLOY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+
+      # Get the GKE credentials so we can deploy to the cluster
+      - run: |-
+          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+
+      - run: |-
+          gcloud components install gke-gcloud-auth-plugin
+
+      - name: Deploy to GKE using Helm
+        run: |-
+          helm upgrade url-shortener ./helm/url-shortener --namespace url-shortener --reuse-values --set image.tag=${{ env.TAG }}
