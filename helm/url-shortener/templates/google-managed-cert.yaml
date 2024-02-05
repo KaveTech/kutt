@@ -2,7 +2,7 @@ apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
   name: url-shortener-managed-cert
-  namespace: {{ .Values.kutt.namespace }}
+  namespace: {{ .Values.namespace }}
 spec:
   domains:
     - kave.to

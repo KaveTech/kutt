@@ -1,7 +1,7 @@
 apiVersion: networking.gke.io/v1beta1
 kind: FrontendConfig
 metadata:
-  namespace: {{ .Values.kutt.namespace }}
+  namespace: {{ .Values.namespace }}
   name: http-to-https
 spec:
   redirectToHttps:

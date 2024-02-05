@@ -1,5 +1,6 @@
+namespace: url-shortener
+
 kutt:
-  namespace: url-shortener
   
   nameOverride: ""
 
