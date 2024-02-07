@@ -80,7 +80,7 @@ kutt:
       # -- Disable anonymous link creation
       disallowAnonymousLinks: true
       # -- Disable registration
-      disallowRegistration: false
+      disallowRegistration: true
       # -- Generated link length
       linkLength: 6
       # -- The name of the site where Kutt is hosted
