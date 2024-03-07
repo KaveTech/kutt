@@ -1,7 +1,7 @@
 namespace: url-shortener
 
 kutt:
-  
+
   nameOverride: ""
 
   fullnameOverride: ""
@@ -44,7 +44,7 @@ kutt:
   externalPostgresql:
     auth:
       # -- Name of the database to use
-      database: url_shortener_db	
+      database: url_shortener_db
       # -- Name of existing secret to use for PostgreSQL credentials
       existingSecret: "url-shortener-secrets"
       # -- Password to use
@@ -86,7 +86,7 @@ kutt:
       # -- The name of the site where Kutt is hosted
       siteName: "KaveHome"
       # -- The daily limit for each user
-      userLimitPerDay: 50
+      userLimitPerDay: 999
     domain:
       # -- Use HTTPS for links with custom domain
       customDomainUseHttps: false
