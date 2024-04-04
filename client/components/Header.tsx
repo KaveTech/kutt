@@ -11,6 +11,7 @@ import styled from "styled-components";
 import { RowCenterV } from "./Layout";
 import { Button } from "./Button";
 import ALink from "./ALink";
+import Logo from "./Icon/Logo";
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -107,13 +108,7 @@ const Header: FC = () => {
             forButton
             isNextLink
           >
-            <Image
-              src="/images/logo.svg"
-              alt="kutt logo"
-              width={18}
-              height={24}
-            />
-            {publicRuntimeConfig.SITE_NAME}
+            <Logo />
           </ALink>
         </LogoImage>
 
