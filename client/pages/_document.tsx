@@ -33,7 +33,7 @@ class AppDocument extends Document<Props> {
           />
           <meta
             name="description"
-            content={`${publicRuntimeConfig.OPEN_GRAPH_DESCRIPTION}`}
+            content={publicRuntimeConfig.OPEN_GRAPH_DESCRIPTION || "Convert long links into shorter and more manageable ones. Create clear and concise URLs, especially for QR codes and limited-character contexts like social media"}
           />
           <link
             href="https://fonts.googleapis.com/css?family=Nunito:300,400,700&display=optional"
@@ -53,10 +53,10 @@ class AppDocument extends Document<Props> {
             content={`https://${publicRuntimeConfig.DEFAULT_DOMAIN}`}
           />
           <meta property="og:type" content="website" />
-          <meta property="og:title" content={publicRuntimeConfig.OPEN_GRAPH_TITLE} />
+          <meta property="og:title" content={publicRuntimeConfig.OPEN_GRAPH_TITLE || "Kave.to  - Modern URL shortener."} />
           <meta
             name="og:description"
-            content={publicRuntimeConfig.OPEN_GRAPH_DESCRIPTION}
+            content={publicRuntimeConfig.OPEN_GRAPH_DESCRIPTION || "Convert long links into shorter and more manageable ones. Create clear and concise URLs, especially for QR codes and limited-character contexts like social media"}
           />
 
           {this.props.styleTags}
