@@ -17,6 +17,16 @@ import Text, { H2 } from "../components/Text";
 import ALink from "../components/ALink";
 import Icon from "../components/Icon";
 
+const LoginTitle = styled.h1`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 32px;
+  text-align: center;
+`;
+
 const LoginForm = styled(Flex).attrs({
   as: "form",
   flexDirection: "column"
@@ -104,6 +114,7 @@ const LoginPage = () => {
           </H2>
         ) : (
           <LoginForm id="login-form" onSubmit={onSubmit("login")}>
+            <LoginTitle>Log in</LoginTitle>
             <Text {...label("email")} as="label" mb={2} bold>
               Email address:
             </Text>
@@ -136,6 +147,7 @@ const LoginPage = () => {
                 flex="1 1 auto"
                 mr={!DISALLOW_REGISTRATION ? ["8px", 16] : 0}
                 height={[44, 56]}
+                color="primary"
                 onClick={onSubmit("login")}
               >
                 <Icon

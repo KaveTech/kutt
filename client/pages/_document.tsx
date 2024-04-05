@@ -33,7 +33,7 @@ class AppDocument extends Document<Props> {
           />
           <meta
             name="description"
-            content={`${publicRuntimeConfig.SITE_NAME} is a free and open source URL shortener with custom domains and stats.`}
+            content={`${publicRuntimeConfig.OPEN_GRAPH_DESCRIPTION}`}
           />
           <link
             href="https://fonts.googleapis.com/css?family=Nunito:300,400,700&display=optional"
@@ -53,27 +53,10 @@ class AppDocument extends Document<Props> {
             content={`https://${publicRuntimeConfig.DEFAULT_DOMAIN}`}
           />
           <meta property="og:type" content="website" />
-          <meta property="og:title" content={publicRuntimeConfig.SITE_NAME} />
+          <meta property="og:title" content={publicRuntimeConfig.OPEN_GRAPH_TITLE} />
           <meta
-            property="og:image"
-            content={`https://${publicRuntimeConfig.DEFAULT_DOMAIN}/images/card.png`}
-          />
-          <meta
-            property="og:description"
-            content="Free & Open Source Modern URL Shortener"
-          />
-          <meta
-            name="twitter:url"
-            content={`https://${publicRuntimeConfig.DEFAULT_DOMAIN}`}
-          />
-          <meta name="twitter:title" content={publicRuntimeConfig.SITE_NAME} />
-          <meta
-            name="twitter:description"
-            content="Free & Open Source Modern URL Shortener"
-          />
-          <meta
-            name="twitter:image"
-            content={`https://${publicRuntimeConfig.DEFAULT_DOMAIN}/images/card.png`}
+            name="og:description"
+            content={publicRuntimeConfig.OPEN_GRAPH_DESCRIPTION}
           />
 
           {this.props.styleTags}

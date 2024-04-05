@@ -14,7 +14,7 @@ interface Props extends BoxProps {
 }
 const StyledBox = styled(Box)<Props>`
   cursor: pointer;
-  color: #2196f3;
+  color: #1A1A14;
   border-bottom: 1px dotted transparent;
   text-decoration: none;
   transition: all 0.2s ease-out;
@@ -23,7 +23,7 @@ const StyledBox = styled(Box)<Props>`
     { forButton: false },
     css`
       :hover {
-        border-bottom-color: #2196f3;
+        border-bottom-color: #1A1A14;
       }
     `
   )}
