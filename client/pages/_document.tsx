@@ -39,11 +39,8 @@ class AppDocument extends Document<Props> {
             href="https://fonts.googleapis.com/css?family=Nunito:300,400,700&display=optional"
             rel="stylesheet"
           />
-          <link rel="icon" sizes="196x196" href="/images/favicon-196x196.png" />
-          <link rel="icon" sizes="32x32" href="/images/favicon-32x32.png" />
-          <link rel="icon" sizes="16x16" href="/images/favicon-16x16.png" />
-          <link rel="apple-touch-icon" href="/images/favicon-196x196.png" />
-          <link rel="mask-icon" href="/images/icon.svg" color="blue" />
+          <link rel="icon" href="/images/favicon-intern.png" />
+          <link rel="apple-touch-icon" href="/images/favicon-intern.png" />
           <link rel="manifest" href="manifest.webmanifest" />
           <meta name="theme-color" content="#f3f3f3" />
 
