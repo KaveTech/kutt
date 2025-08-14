@@ -11,7 +11,7 @@ import styled from "styled-components";
 import { RowCenterV } from "./Layout";
 import { Button } from "./Button";
 import ALink from "./ALink";
-import Logo from "./Icon/Logo";
+import KaveHomeLogo from "./Icon/Logo";
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -108,7 +108,7 @@ const Header: FC = () => {
             forButton
             isNextLink
           >
-            <Logo />
+            <KaveHomeLogo width={150} />
           </ALink>
         </LogoImage>
 
