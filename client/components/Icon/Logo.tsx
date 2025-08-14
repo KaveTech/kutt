@@ -1,5 +1,3 @@
-import type { JSX } from "react";
-
 type KaveHomeIconProps = {
     className?: string;
     color?: string;
