@@ -70,6 +70,11 @@ kutt:
       persistence:
         enabled: false
 
+    image:
+      registry: docker.io
+      repository: bitnamilegacy/redis
+      tag: 7.2.2-debian-11-r0
+
   kutt:
     admin:
       # -- Comma seperated list of email addresses that can access admin actions on settings page
