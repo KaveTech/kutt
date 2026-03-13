@@ -91,7 +91,7 @@ kutt:
       # -- The name of the site where Kutt is hosted
       siteName: "KaveHome"
       # -- The daily limit for each user
-      userLimitPerDay: 999
+      userLimitPerDay: 9999
     domain:
       # -- Use HTTPS for links with custom domain
       customDomainUseHttps: false
@@ -101,7 +101,7 @@ kutt:
       useFirstIngressHost: true
     google:
       # -- Use existing secret for Google configuration. The secret has to contain the key `GOOGLE_SAFE_BROWSING_KEY`. When it's set the `kutt.google.safeBrowsingKey` is ignored.
-      existingSecret: "url-shortener-secrets"
+      existingSecret: ""
       # -- Google Cloud API to prevent from users from submitting malware URLs. Get it from https://developers.google.com/safe-browsing/v4/get-started.
       safeBrowsingKey: ""
     jwt:
