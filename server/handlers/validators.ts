@@ -441,6 +441,7 @@ export const linksCount = async (user?: User) => {
   });
 
   if (count > env.USER_LIMIT_PER_DAY) {
+    console.log("You have reached your daily limit");
     throw new CustomError(
       `You have reached your daily limit (${env.USER_LIMIT_PER_DAY}). Please wait 24h.`
     );

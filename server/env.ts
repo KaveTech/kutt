@@ -20,7 +20,7 @@ const env = cleanEnv(process.env, {
   REDIS_PORT: num({ default: 6379 }),
   REDIS_PASSWORD: str({ default: "" }),
   REDIS_DB: num({ default: 0 }),
-  USER_LIMIT_PER_DAY: num({ default: 50 }),
+  USER_LIMIT_PER_DAY: num({ default: 20000 }),
   NON_USER_COOLDOWN: num({ default: 10 }),
   DEFAULT_MAX_STATS_PER_LINK: num(),
   DISALLOW_ANONYMOUS_LINKS: bool({ default: false }),
