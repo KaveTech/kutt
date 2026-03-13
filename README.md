@@ -1,3 +1,13 @@
+# IMPORTANT PRODUCTION CONSIDERATIONS:
+The production working image is `ghcr.io/kavetech/kutt:17`
+All other images are broken. The app itself is broken.
+
+Additionally redis image has been manually modified in stateful set to this one:
+https://github.com/element-hq/bitnamilegacy/pkgs/container/bitnamilegacy%2Fredis/497913324?tag=7.2.4-debian-12-r9
+
+As the chart uses the bitnami redis and bitnami now has a paywall to access its images. We need to fix this.
+
+
 # How to run locally (Kave Version):
 1. `copy env.sample .env`, values are ready for local development.
 2. `npm install --force`, to install all needed dependencies. Use NPM. Do not use yarn.
@@ -31,13 +41,13 @@ externalPostgresql:
     hostname: <Private IP here>
 ```
 
-## Prepare the namespace to use helm 
+## Prepare the namespace to use helm
 Kutt has been deployed in k8s Kave Tech Services' `services-prod` cluster using the official Helm Chart under the `url-shortener` namespace.
 
 If it's first time:
-See how to use ssl cert -> [Use Google-managed SSL Cert](https://loop.microsoft.com/p/eyJ3Ijp7InUiOiJodHRwczovL2p1bGlhZ3J1cC5zaGFyZXBvaW50LmNvbS8%2FbmF2PWN6MGxNa1ltWkQxaUlWaHdaemM1ZVVwSU1qQXRlVjlwVldkTVlqRkdkRUZEV0VOUWRXVllha1pLZG1zMlUwSlliMVJDY1ZweFJsYzFUR3RaVkhWUk5FRnpZMkoyVFhGM05Fa21aajB3TVRWTFdGaElObGhVVnpWTlVFcEhWbE5JVGtoTVVFMHlVbEJUV1ZGQ1JFZFpKbU05Sm1ac2RXbGtQVEUlM0QiLCJyIjpmYWxzZX0sInAiOnsidSI6Imh0dHBzOi8vanVsaWFncnVwLnNoYXJlcG9pbnQuY29tLzpmbDovci9jb250ZW50c3RvcmFnZS9DU1BfZjczYjk4NWUtNDcyMi00ZmRiLWIyZmUtMjUyMDJkYmQ0NWI0L2xhJTIwQmlibGlvdGVjYSUyMGRlJTIwZG9jdW1lbnRvcy9Mb29wQXBwRGF0YS9TaW4lMjB0JUMzJUFEdHVsbyUyMDE1Lmxvb3A%2FZD13OTUzYWNmM2QzYzJlNGVhOGIzNjM4NzY5NjUyY2JiZjkmY3NmPTEmd2ViPTEmbmF2PWN6MGxNa1pqYjI1MFpXNTBjM1J2Y21GblpTVXlSa05UVUY5bU56TmlPVGcxWlMwME56SXlMVFJtWkdJdFlqSm1aUzB5TlRJd01tUmlaRFExWWpRbVpEMWlJVmh3WnpjNWVVcElNakF0ZVY5cFZXZE1ZakZHZEVGRFdFTlFkV1ZZYWtaS2RtczJVMEpZYjFSQ2NWcHhSbGMxVEd0WlZIVlJORUZ6WTJKMlRYRjNORWttWmowd01UVkxXRmhJTmxJMVdqUTFTa3RNVWpSV1FraE1SMWswU0U1R1UxTmFUemRhSm1NOUpUSkdKbVpzZFdsa1BURW1ZVDFNYjI5d1FYQndKbkE5SlRRd1pteDFhV1I0SlRKR2JHOXZjQzF3WVdkbExXTnZiblJoYVc1bGNpWjRQU1UzUWlVeU1uY2xNaklsTTBFbE1qSlVNRkpVVlVoNGNXUlhlSEJaVjJSNVpGaEJkV015YUdoamJWWjNZakpzZFdSRE5XcGlNakU0V1dsR1dXTkhZek5QV0d4TFUwUkpkMHhZYkdaaFZsWnVWRWRKZUZKdVVrSlJNV2hFVlVoV2JGZEhjRWRUYmxweVRteE9RMWRIT1ZWUmJrWmhZMVZhV0U1VmVISlhWbEl4VlZSU1FtTXlUbWxrYXpGNFpIcFNTbVpFUVhoT1ZYUlpWMFZuTWxkR1VsaE9WVEZSVTJ0a1YxVXdhRTlUUlhoUlZGUktVMVZHVGxwVlZVcEZVakZySlRORUpUSXlKVEpESlRJeWFTVXlNaVV6UVNVeU1qbG1aR1JoWlRJM0xXRm1NbUV0TkdGaFl5MWhNVGxsTFRBelpURXhNbVJsT0RrMVlTVXlNaVUzUkElM0QlM0QiLCJyIjpmYWxzZX0sImkiOnsiaSI6IjlmZGRhZTI3LWFmMmEtNGFhYy1hMTllLTAzZTExMmRlODk1YSJ9fQ%3D%3D) 
+See how to use ssl cert -> [Use Google-managed SSL Cert](https://loop.microsoft.com/p/eyJ3Ijp7InUiOiJodHRwczovL2p1bGlhZ3J1cC5zaGFyZXBvaW50LmNvbS8%2FbmF2PWN6MGxNa1ltWkQxaUlWaHdaemM1ZVVwSU1qQXRlVjlwVldkTVlqRkdkRUZEV0VOUWRXVllha1pLZG1zMlUwSlliMVJDY1ZweFJsYzFUR3RaVkhWUk5FRnpZMkoyVFhGM05Fa21aajB3TVRWTFdGaElObGhVVnpWTlVFcEhWbE5JVGtoTVVFMHlVbEJUV1ZGQ1JFZFpKbU05Sm1ac2RXbGtQVEUlM0QiLCJyIjpmYWxzZX0sInAiOnsidSI6Imh0dHBzOi8vanVsaWFncnVwLnNoYXJlcG9pbnQuY29tLzpmbDovci9jb250ZW50c3RvcmFnZS9DU1BfZjczYjk4NWUtNDcyMi00ZmRiLWIyZmUtMjUyMDJkYmQ0NWI0L2xhJTIwQmlibGlvdGVjYSUyMGRlJTIwZG9jdW1lbnRvcy9Mb29wQXBwRGF0YS9TaW4lMjB0JUMzJUFEdHVsbyUyMDE1Lmxvb3A%2FZD13OTUzYWNmM2QzYzJlNGVhOGIzNjM4NzY5NjUyY2JiZjkmY3NmPTEmd2ViPTEmbmF2PWN6MGxNa1pqYjI1MFpXNTBjM1J2Y21GblpTVXlSa05UVUY5bU56TmlPVGcxWlMwME56SXlMVFJtWkdJdFlqSm1aUzB5TlRJd01tUmlaRFExWWpRbVpEMWlJVmh3WnpjNWVVcElNakF0ZVY5cFZXZE1ZakZHZEVGRFdFTlFkV1ZZYWtaS2RtczJVMEpZYjFSQ2NWcHhSbGMxVEd0WlZIVlJORUZ6WTJKMlRYRjNORWttWmowd01UVkxXRmhJTmxJMVdqUTFTa3RNVWpSV1FraE1SMWswU0U1R1UxTmFUemRhSm1NOUpUSkdKbVpzZFdsa1BURW1ZVDFNYjI5d1FYQndKbkE5SlRRd1pteDFhV1I0SlRKR2JHOXZjQzF3WVdkbExXTnZiblJoYVc1bGNpWjRQU1UzUWlVeU1uY2xNaklsTTBFbE1qSlVNRkpVVlVoNGNXUlhlSEJaVjJSNVpGaEJkV015YUdoamJWWjNZakpzZFdSRE5XcGlNakU0V1dsR1dXTkhZek5QV0d4TFUwUkpkMHhZYkdaaFZsWnVWRWRKZUZKdVVrSlJNV2hFVlVoV2JGZEhjRWRUYmxweVRteE9RMWRIT1ZWUmJrWmhZMVZhV0U1VmVISlhWbEl4VlZSU1FtTXlUbWxrYXpGNFpIcFNTbVpFUVhoT1ZYUlpWMFZuTWxkR1VsaE9WVEZSVTJ0a1YxVXdhRTlUUlhoUlZGUktVMVZHVGxwVlZVcEZVakZySlRORUpUSXlKVEpESlRJeWFTVXlNaVV6UVNVeU1qbG1aR1JoWlRJM0xXRm1NbUV0TkdGaFl5MWhNVGxsTFRBelpURXhNbVJsT0RrMVlTVXlNaVUzUkElM0QlM0QiLCJyIjpmYWxzZX0sImkiOnsiaSI6IjlmZGRhZTI3LWFmMmEtNGFhYy1hMTllLTAzZTExMmRlODk1YSJ9fQ%3D%3D)
 
-## Now let's use helm 
+## Now let's use helm
 ```
 cd helm/url-shortener
 ```
@@ -48,7 +58,7 @@ helm install url-shortener . --namespace url-shortener --values custom-values.ya
 
 to update:
 ```
-helm upgrade url-shortener . --namespace url-shortener --values custom-values.yaml 
+helm upgrade url-shortener . --namespace url-shortener --values custom-values.yaml
 ```
 
 to uninstall:
@@ -223,4 +233,3 @@ Pull requests are welcome. You'll probably find lots of improvements to be made.
 Open issues for feedback, requesting features, reporting bugs or discussing ideas.
 
 Special thanks to [Thomas](https://github.com/trgwii) and [Muthu](https://github.com/MKRhere). Logo design by [Muthu](https://github.com/MKRhere).
-
