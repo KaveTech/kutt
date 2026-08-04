@@ -3,6 +3,9 @@ name: Deploy new image version
 on:
   workflow_dispatch:
 
+permissions: 
+  packages: write
+
 env:
   TAG: ${{ github.run_number}}
   GKE_CLUSTER: services-prod-1
