@@ -1,6 +1,15 @@
 const { parsed: localEnv = {} } = require("dotenv").config();
 
-const env = key => process.env[key] ?? localEnv[key];
+const env = key => {
+  const processValue = process.env[key];
+  const value = processValue !== undefined && processValue !== null ? processValue : localEnv[key];
+
+  if (value === undefined) {
+    console.warn(`[next.config] ${key} is not defined in process.env or .env`);
+  }
+
+  return value;
+};
 
 module.exports = {
   // we are using the process env variables because in production we don't have access to the .env file
