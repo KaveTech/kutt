@@ -82,4 +82,4 @@ jobs:
 
       - name: Deploy to GKE using Helm
         run: |-
-          helm upgrade url-shortener ./helm/url-shortener --namespace url-shortener --set-string kutt.image.tag="${{ env.TAG }}"
+          helm upgrade url-shortener ./helm/url-shortener --namespace url-shortener -f ./helm/url-shortener/custom-values.yaml --set-string kutt.image.tag="${{ env.TAG }}"
