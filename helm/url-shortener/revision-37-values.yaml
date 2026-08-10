@@ -1,0 +1,81 @@
+USER-SUPPLIED VALUES:
+kutt:
+  externalPostgresql:
+    auth:
+      database: url_shortener_db
+      existingSecret: url-shortener-secrets
+      password: ""
+      userPasswordKey: DATABASE_PASSWORD
+      username: url_shortener_user
+    hostname: 10.86.32.31
+    port: 5432
+  fullnameOverride: ""
+  image:
+    pullPolicy: Always
+    repository: ghcr.io/kavetech/kutt
+    tag: "29"
+  imagePullSecrets:
+  - name: github-token-secret
+  ingress:
+    annotations:
+      kubernetes.io/ingress.class: gce
+      kubernetes.io/ingress.global-static-ip-name: url-shortener-ip-address
+      networking.gke.io/managed-certificates: url-shortener-managed-cert
+      networking.gke.io/v1beta1.FrontendConfig: http-to-https
+    enabled: true
+    hosts:
+    - host: kave.to
+      paths:
+      - path: /*
+        pathType: ImplementationSpecific
+  kutt:
+    admin:
+      emails: it@kavehome.com
+    config:
+      defaultMaxStatsPerLink: "5000"
+      disallowAnonymousLinks: true
+      disallowRegistration: true
+      linkLength: 6
+      siteName: KaveHome
+      userLimitPerDay: 999
+    domain:
+      customDomainUseHttps: false
+      defaultDomain: kave.to
+      useFirstIngressHost: true
+    google:
+      existingSecret: url-shortener-secrets
+      safeBrowsingKey: ""
+    jwt:
+      existingSecret: ""
+      key: url-shortener-secrets
+    mail:
+      contactEmail: it@kavehome.com
+      existingSecret: url-shortener-secrets
+      from: kutt-url-shortener@kavehome.com
+      host: smtp.mandrillapp.com
+      password: ""
+      port: 587
+      reportEmail: ""
+      secure: false
+      username: it@kavehome.com
+    recaptcha:
+      existingSecret: ""
+      secretKey: ""
+      siteKey: ""
+  nameOverride: ""
+  postgresql:
+    enabled: false
+  redis:
+    architecture: standalone
+    auth:
+      enabled: false
+    enabled: true
+    master:
+      persistence:
+        enabled: false
+  service:
+    port: 3000
+    type: NodePort
+  serviceAccount:
+    create: false
+namespace: url-shortener
