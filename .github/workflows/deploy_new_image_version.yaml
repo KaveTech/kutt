@@ -3,7 +3,7 @@ name: Deploy new image version
 on:
   workflow_dispatch:
 
-permissions: 
+permissions:
   packages: write
 
 env:
@@ -73,7 +73,6 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
 
-
       # Get the GKE credentials so we can deploy to the cluster
       - run: |-
           gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
@@ -83,4 +82,4 @@ jobs:
 
       - name: Deploy to GKE using Helm
         run: |-
-          helm upgrade url-shortener ./helm/url-shortener --namespace url-shortener --reuse-values --set-string kutt.image.tag="${{ env.TAG }}"
+          helm upgrade url-shortener ./helm/url-shortener --namespace url-shortener --set-string kutt.image.tag="${{ env.TAG }}"

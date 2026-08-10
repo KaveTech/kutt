@@ -54,7 +54,7 @@ kutt:
       # -- Key in the secret containing the password
       userPasswordKey: "DATABASE_PASSWORD"
     # -- Hostname of the PostgreSQL database
-    hostname: "<Database IP Here>"
+    hostname: 10.86.32.31
     # -- Port used to connect to PostgreSQL database
     port: 5432
 
@@ -71,9 +71,9 @@ kutt:
         enabled: false
 
     image:
-      registry: docker.io
-      repository: bitnamilegacy/redis
-      tag: 7.2.2-debian-11-r0
+      registry: ghcr.io
+      repository: element-hq/bitnamilegacy/redis
+      tag: 7.2.4-debian-12-r9
 
   kutt:
     admin:
@@ -91,7 +91,7 @@ kutt:
       # -- The name of the site where Kutt is hosted
       siteName: "KaveHome"
       # -- The daily limit for each user
-      userLimitPerDay: 9999
+      userLimitPerDay: 999
     domain:
       # -- Use HTTPS for links with custom domain
       customDomainUseHttps: false
@@ -101,14 +101,14 @@ kutt:
       useFirstIngressHost: true
     google:
       # -- Use existing secret for Google configuration. The secret has to contain the key `GOOGLE_SAFE_BROWSING_KEY`. When it's set the `kutt.google.safeBrowsingKey` is ignored.
-      existingSecret: ""
+      existingSecret: url-shortener-secrets
       # -- Google Cloud API to prevent from users from submitting malware URLs. Get it from https://developers.google.com/safe-browsing/v4/get-started.
       safeBrowsingKey: ""
     jwt:
       # -- Use existing secret for JWT secret key. The secret has to contain the key `JWT_SECRET`. When it's set the kutt.jwt.key is ignored.
-      existingSecret: ""
+      existingSecret: "url-shortener-secrets"
       # -- make sure to replace with your own secret key
-      key: "url-shortener-secrets"
+      key: ""
     mail:
       # -- Support email to show on the app
       contactEmail: "it@kavehome.com"
