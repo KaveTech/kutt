@@ -7,7 +7,7 @@ permissions:
   packages: write
 
 env:
-  TAG: ${{ github.run_number}}
+  TAG: ${{ github.run_number }}
   GKE_CLUSTER: services-prod-1
   GKE_ZONE: europe-west2-b
 
@@ -20,18 +20,7 @@ jobs:
 
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3.3.0
-
-      - name: Import Secrets
-        id: import-secrets
-        uses: hashicorp/vault-action@v2
-        with:
-          url: https://vault.kavehome.com/
-          method: github
-          githubToken: ${{ secrets.ITKAVEHOME_VAULT_TOKEN_READ }}
-          caCertificate: ${{ secrets.ITKAVEHOME_VAULT_KEYCHAIN_CERTIFICATE }}
-          secrets: |
-            k8s/kv/kave-tech-services/data/generic-utils GOOGLE_APPLICATION_CREDENTIALS_DEPLOY;
+        uses: actions/checkout@v7
 
       - name: Set lower case repository name
         id: prepare-outputs
@@ -40,7 +29,7 @@ jobs:
           echo "IMAGE_REPOSITORY_LOWERCASE=$(printf ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -48,10 +37,10 @@ jobs:
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v4
 
       - name: Build&Push App container image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v7
         with:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
@@ -60,26 +49,47 @@ jobs:
             ghcr.io/${{ env.IMAGE_REPOSITORY_LOWERCASE }}:${{ env.TAG }}
           cache-from: type=registry,ref=ghcr.io/${{ env.IMAGE_REPOSITORY_LOWERCASE }}:build-cache
           cache-to: type=registry,ref=ghcr.io/${{ env.IMAGE_REPOSITORY_LOWERCASE }}:build-cache
+  update-gitops:
+    name: Update GitOps Values
+    runs-on: ubuntu-latest
+    needs: [build-image-and-push]
 
-      - name: Install Helm
-        uses: azure/setup-helm@v3
-
-      # Setup gcloud CLI
-      - id: auth
-        uses: google-github-actions/auth@v1
+    steps:
+      - name: Get Executor token
+        id: executor
+        uses: getsentry/action-github-app-token@v4.0.0
         with:
-          credentials_json: ${{ env.GOOGLE_APPLICATION_CREDENTIALS_DEPLOY }}
+          app_id: ${{ secrets.ACTION_EXECUTOR_ID }}
+          private_key: ${{ secrets.ACTION_EXECUTOR_KEY }}
 
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          repository: KaveTech/kutt-gitops
+          token: ${{ steps.executor.outputs.token}}
 
-      # Get the GKE credentials so we can deploy to the cluster
-      - run: |-
-          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+      - name: Install yq
+        uses: mikefarah/yq@v4
 
-      - run: |-
-          gcloud components install gke-gcloud-auth-plugin
+      - name: Update backend and migrator image tags
+        run: |
+          yq -i '.kutt.image.tag = "${{ env.TAG }}"' values.yaml
 
-      - name: Deploy to GKE using Helm
-        run: |-
-          helm upgrade url-shortener ./helm/url-shortener --namespace url-shortener -f ./helm/url-shortener/custom-values.yaml --set-string kutt.image.tag="${{ env.TAG }}"
+      - name: Commit and push
+        env:
+          GITHUB_TOKEN: ${{ steps.executor.outputs.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+
+          git fetch origin main
+          git add -- values.yaml
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "ci: set image tag to ${{ env.TAG }}"
+          git push origin HEAD:refs/heads/main
